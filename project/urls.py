@@ -18,16 +18,10 @@ from django.conf.urls import url,include
 from rest_framework import routers
 from django.contrib import admin
 from heatBalance import views
-from project.views import model_form_upload,ListView,DetailView,basic
-
-router=routers.DefaultRouter()
-router.register(r'heat',views.heatBalViewSet)
+from .views import model_form_upload,ListView,DetailView,basic
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^admin/', admin.site.urls),
-    url(r'^project/$',ListView.as_view(),name='project'),
-    url(r'^upload/$',model_form_upload,name='upload'),
-    url(r'^project/(?P<pk>\d+)/$',DetailView.as_view(),name='detail'),
+    url(r'^', ListView.as_view(),name='index'),
+    url(r'^(?P<pk>\d+)/$',DetailView.as_view(),name='detail'),
     url(r'^project/(?P<pk>\d+)/basic$',basic.as_view(),name='basic'),
 ]
