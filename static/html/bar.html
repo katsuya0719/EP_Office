@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Lines</title>
+    <link rel="stylesheet" type="text/css" href="static/vendor/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/bar.css"/>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="static/vendor/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="static/vendor/js/jquery-2.2.3.min.js"></script>
+</head>
+<style>
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+</style>
+<body>
+<div class="container">
+    <div class="row">
+    <h3>Basic Information</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-4" id="hbar">Area schedule[m2]</div>
+        <div class="col-md-4" id="hbar4">WWR[%]</div>
+        <div class="col-md-4" id="hbar5">Window area[m2]</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" id="hbar1">Lighting Power Density[W/m2]</div>
+        <div class="col-md-4" id="hbar2">People Density[m2/person]</div>
+        <div class="col-md-4" id="hbar3">Small Power[W/m2]</div>
+    </div>
+
+    
+
+</div>
+
+<script type="text/javascript" src="static/js/bar.js"></script>
+<script type="text/javascript" src="static/js/hbar2.js"></script>
+
+</body>
+
+</html>

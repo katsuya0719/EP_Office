@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Minimal Django File Upload Example</title>
+    </head>
+
+    <body>
+	{% block content %}
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{form.as_p}}
+			<button type="submit">Upload</button>
+		</form>
+	{% endblock %}
+	</body>
+</html>

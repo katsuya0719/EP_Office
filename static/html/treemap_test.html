@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sequences sunburst</title>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <style>
+
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: auto;
+        position: relative;
+        width: 960px;
+      }
+
+      form {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+
+      .node {
+        border: solid 1px white;
+        font: 10px sans-serif;
+        line-height: 12px;
+        overflow: hidden;
+        position: absolute;
+        text-indent: 2px;
+      }
+
+      </style>
+    <link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link rel="stylesheet" type="text/css" href="static/css/sunburst.css"/>
+  </head>
+  <body>
+    <form>
+      <label><input type="radio" name="mode" value="area" checked> Area</label>
+      <label><input type="radio" name="mode" value="load"> Cooling Load</label>
+      <label><input type="radio" name="mode" value="gain"> Solar Heat Gain</label>
+    </form>
+    <script type="text/javascript" src="static/js/treemap_test.js"></script>
+    <script type="text/javascript">
+      // Hack to make this example display correctly in an iframe on bl.ocks.org
+      //d3.select(self.frameElement).style("height", "700px");
+  </script> 
+  </body>
+</html>

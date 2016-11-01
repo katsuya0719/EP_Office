@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+svg {
+  padding: 10px 0 0 10px;
+}
+
+.arc {
+  stroke: #fff;
+}
+
+</style>
+<body>
+<h2>Heat gain for each room</h2>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var radius = 120,
+    padding = 10;
+/*
+var color = d3.scale.linear() // <-A
+    .range(["#ee4035", "#f37736"])
+    .interpolate(d3.interpolateRgb);
+*/
+var color=d3.scale.category20()
+//var color = d3.scale.ordinal()
+//    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+var arc = d3.svg.arc()
+    .outerRadius(radius)
+    .innerRadius(radius - 30);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.gain; });
+
+d3.csv("static/csv/each_room2.csv", function(error, data) {
+  if (error) throw error;
+  //console.log(d3.keys(data[0]))
+  row=d3.keys(data[0])
+  row.shift();
+  console.log(row)
+
+  color.domain(row.filter(function(key) { return key !== "room"; }));
+
+  data.forEach(function(d) {
+    d.heat = color.domain().map(function(name) {
+      return {name: name, gain: +d[name]};
+    });
+  });
+  console.log(data[0])
+  var legend = d3.select("body").append("svg")
+      .attr("class", "legend")
+      .attr("width", radius * 2)
+      .attr("height", radius * 2)
+    .selectAll("g")
+      .data(color.domain().slice().reverse())
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * 15 + ")"; });
+
+  legend.append("rect")
+      .attr("width", 12)
+      .attr("height", 12)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", 20)
+      .attr("y", 5)
+      .attr("dy", ".35em")
+      .text(function(d) { return d; });
+
+  var svg = d3.select("body").selectAll(".pie")
+      .data(data)
+    .enter().append("svg")
+      .attr("class", "pie")
+      .attr("width", radius * 2)
+      .attr("height", radius * 2)
+    .append("g")
+      .attr("transform", "translate(" + radius + "," + radius + ")");
+  console.log(data)
+  svg.selectAll(".arc")
+      .data(function(d) { return pie(d.heat); })
+    .enter().append("path")
+      .attr("class", "arc")
+      .attr("d", arc)
+      .style("fill", function(d) { return color(d.data.name); });
+
+  svg.append("text")
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.room.slice(0,-13); });
+
+});
+
+</script>
