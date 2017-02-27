@@ -1,8 +1,10 @@
 {% load staticfiles %}
+
 <html>
 	<head>
 		<title>Energy simulation processing</title>
 		<link href="{% static 'vendor/css/bootstrap.css' %}" rel="stylesheet" media="screen" />
+		<link href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" rel="stylesheet" />
 		{% block css %}
 		{% endblock %}
 	</head>
@@ -12,9 +14,13 @@
 		<div class="navbar navbar-inverse" role="navigation">
 	        <div class="navbar-inner">
 	        	<ul class="nav navbar-nav">
-	        		<li><a href="{% url 'project' %}">Projects</a></li>
-				<li><a href="{% url 'project' %}">Compare</a></li>
+	        		<li><a href="{% url 'project:index' %}">Projects</a></li>
+					<li><a href="{% url 'project:search' %}">Search</a></li>
 					<li><a href="{% url 'upload' %}">Upload</a></li>
+					<li><a href="https://katsuya0719.github.io/DjangoEP/17013010.html">What you can do?</a></li>
+					<li><a href="https://katsuya0719.github.io/DjangoEP/first-post.html">How to use?</a></li>
+					<li><a href="{% url 'help' %}">Further development plan</a></li>
+					<li><a href="{% url 'help' %}">Feedback&Bug report</a></li>
 				</ul>
 			</div>
 		</div>

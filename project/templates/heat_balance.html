@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+	<h2>{{object.project}} v_{{object.version}}</h2>
+	<div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-inner">
+	        <ul class="nav navbar-nav">
+                <li><a href="{% url 'project:detail' object.pk %}">Summary</a></li>
+				<li><a href="{% url 'project:basic' object.pk %}">Basic info</a></li>
+	        	<li><a href="{% url 'project:heat' object.pk %}">Heat balance</a></li>
+				<li><a href="{% url 'upload' %}">Time series</a></li>
+			</ul>
+		</div>
+	</div>
+
+    <h4>Heat Gain for each room top 50</h4>
+        <div class="row">
+		<svg width="1200" height="600"></svg>
+	    </div>
+    </div>
+
+<script src="{% static 'vendor/js/jquery-2.2.3.min.js' %}"></script>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="{% static 'js/stackbar.js' %}"></script>
+
+
+<script type="text/javascript">
+	readcsv("{{object.loc.heatbal}}");
+</script>
+
+{% endblock %}

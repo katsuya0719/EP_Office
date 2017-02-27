@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<h2>Results comparison </h2>
+
+<div class="row">
+	<h4>annual energy consumption</h4>
+	<svg width="1200" height="400"></svg>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Version</th>
+			<th>Area[m2]</th>
+			<th>EUI[kWh/m2]</th>
+			<th>Unmet hour[h]</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for project in object_list %}
+		<tr>
+			<td><a href="{% url 'project:detail' project.pk %}">{{project.version}}</a></td>
+			<td>{{project.area.total_area|floatformat:"0"}}</td>
+			<td>{{project.energy.euipertotal|floatformat:"0"}}</td>
+			<td>{{project.unmet.heating|add:project.unmet.cooling}}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+<div class="row">
+	<div class="col-md-12" id="table">
+</div>
+<div class="row">
+	<h4>monthly energy consumption</h4>
+	<svg width="1200" height="600"></svg>
+</div>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="{% static 'js/stackbar_multiple.js' %}"></script>
+<script src="{% static 'vendor/js/jquery-2.2.3.min.js' %}"></script>
+
+<script type="text/javascript">
+var prj=[]
+var version=[];
+var test=[];
+{% for project in object_list %}
+    prj.push("{{project.loc.energy}}");
+    version.push("{{project.version}}");
+    var temp={key:"{{project.version}}", file:"{{project.loc.energy}}"}
+    test.push(temp);
+{% endfor %}
+    loadDataSet({
+        files:test,
+        endFn:plotGraph
+    });
+</script>
+
+{% endblock %}

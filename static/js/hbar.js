@@ -1,6 +1,8 @@
 function hbarChart(csv,para,id){
     d3.csv(csv, function(d,i) {
+        console.log(d)
         var arr = Object.keys(d).map(function (key) {return d[key]});
+        console.log(arr)
         d.room = arr[0];
         d.area = +d["Area [m2]"];
         d.Light = +d["Lighting [W/m2]"];
@@ -49,7 +51,7 @@ function hbarChart(csv,para,id){
             .attr("width", width)
             .attr("height", height);
 
-    console.log(id,svg);
+    //console.log(id,svg);
     bar = svg.selectAll("g")
             .data(data1)
             .enter()

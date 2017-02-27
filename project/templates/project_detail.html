@@ -1,72 +1,120 @@
 {% extends "base.html" %}
 {% block content %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/bar.css' %}" />
+{% load humanize %}
 
-	<h2>{{object.project}}</h2>
+	<h2>{{object.project}} v_{{object.version}}</h2>
 	<div class="navbar navbar-inverse" role="navigation">
-	        <div class="navbar-inner">
-	        	<ul class="nav navbar-nav">
-				<li><a href="{% url 'project'  %}">Basic info</a></li>
-	        		<li><a href="{% url 'project' %}">Heat balance</a></li>
-				<li><a href="{% url 'upload' %}">Time series</a></li>
+        <div class="navbar-inner">
+	        <ul class="nav navbar-nav">
+                <li><a href="{% url 'project:detail' object.pk %}">Summary</a></li>
+				<li><a href="{% url 'project:basic' object.pk %}">Basic info</a></li>
+	        	<li><a href="{% url 'project:heat' object.pk %}">Heat balance</a></li>
+				<li><a href="{% url 'project:time' object.pk %}">Time series</a></li>
 			</ul>
 		</div>
 	</div>
 	
     <div class="row">
-    <h4>Energy Performance</h4>
-        <div class="col-md-6" id="pie"></div>
         <div class="col-md-6" id="info">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Room</th>
-					<th>Area</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	  </div>
-    </div>
-    
-    <div class="row">
-    <h4>Basic information</h4>
-        <div class="row">
-		<div class="col-md-4" id="hbar">Area schedule[m2]</div>
-		<div class="col-md-4" id="hbar4">WWR[%]</div>
-		<div class="col-md-4" id="hbar5">Window area[m2]</div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Energy Conservation Measures</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ecm in object.ecms.all %}
+                    <tr>
+                        <td><a href="{% url 'ecm:detail' ecm.pk %}">{{ecm.name}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Area[m2]</th>
+                        <th>Energy consumption[kWh]</th>
+                        <th>EUI[kWh/m2]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td>{{object.area.total_area|floatformat:"0"|intcomma}}</td>
+                        <td>{{object.energy.total|floatformat:"0"|intcomma}}</td>
+                        <td>{{object.energy.euipertotal|floatformat:"0"|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Conditioned area</th>
+                        <td>{{object.area.condition_area|floatformat:"0"|intcomma}}</td>
+                        <td> - </td>
+                        <td>{{object.energy.euipercondition|floatformat:"0"|intcomma}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>WWR[%]</th>
+                        <th>Total</th>
+                        <th>North</th>
+                        <th>East</th>
+                        <th>South</th>
+                        <th>West</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Above ground</th>
+                        <td>{{object.wwr.total|floatformat:"1"}}</td>
+                        <td>{{object.wwr.north|floatformat:"1"}}</td>
+                        <td>{{object.wwr.east|floatformat:"1"}}</td>
+                        <td>{{object.wwr.south|floatformat:"1"}}</td>
+                        <td>{{object.wwr.west|floatformat:"1"}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>heating period</th>
+                        <th>cooling period</th>
+                        <th>ASHRAE55-2004</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Unmet hour[h]</th>
+                        <td>{{object.unmet.heating|floatformat:"0"}}</td>
+                        <td>{{object.unmet.cooling|floatformat:"0"}}</td>
+                        <td>{{object.unmet.ashrae|floatformat:"0"|intcomma}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
 	    </div>
-	    <div class="row">
-		<div class="col-md-4" id="hbar1">Lighting Power Density[W/m2]</div>
-		<div class="col-md-4" id="hbar2">People Density[m2/person]</div>
-		<div class="col-md-4" id="hbar3">Small Power[W/m2]</div>
-	    </div>
+
+		<div class="col-md-6" id="pie">
+            <h4>Energy Breakdown</h4>
+        </div>
     </div>
 
 <script src="{% static 'vendor/js/d3.js' %}"></script>
 <script src="{% static 'js/pie.js' %}"></script>
 <script src="{% static 'vendor/js/jquery-2.2.3.min.js' %}"></script>
-<script src="{% static 'js/hbar.js' %}"></script>
 
 
 <script type="text/javascript">
-    readcsv("{{energy}}");
-    renderAll("{{zone}}");
-    /*
-    hbarChart("{{zone}}","area",'#hbar');
-    hbarChart("{{zone}}","Light",'#hbar1');
-    hbarChart("{{zone}}","People",'#hbar2');
-    hbarChart("{{zone}}","Plug",'#hbar3');
-    hbarChart("{{zone}}","Plug",'#hbar3');
-    hbarChart("{{zone}}","WWR",'#hbar4');
-    hbarChart("{{zone}}","Glass",'#hbar5');
-    */
+    readcsv("{{object.loc.energy}}",600,450,200,100);
 </script>
 
 {% endblock %}

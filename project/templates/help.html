@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<head>
+    <link href="{% static 'css/help.css' %}" rel="stylesheet" media="screen" />
+</head>
+<h2>How to use this application</h2>
+This application can help energy simulation user to reduce the tedious work for post processing and dig into the data analysis more.
+You can
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#tab1" data-toggle="tab">EnergyPlus User</a></li>
+  <li><a href="#tab2" data-toggle="tab">OpenStudio User</a></li>
+  <li><a href="#tab3" data-toggle="tab">IES VE User</a></li>
+</ul>
+
+<!--
+  タブの切り替えボタン
+  class : tab-paneで非表示化
+  id : ボタンと同じidを使用する
+-->
+
+<div class="tab-content">
+  <div class="tab-pane active" id="tab1">
+      <h4>Step1. Set idf file before running simulation</h4>
+      Once you set all the setting for energy simulation, set following setting.
+      <ol>
+          <li>Set Output:Table:SummaryReports to AllSummary<br>
+              <img src="{% static 'img/instruction1.png' %}"/>
+          </li>
+          <br>
+          <li>In OutputControl:Table:Style chapter, set Column Separator to CommaAndHTML and Unit Conversion to JtoKWH<br>
+              <img src="{% static 'img/instruction2.png' %}"/>
+          </li>
+      </ol>
+      <h4>Step2. After finished simulation, go to upload page and input all the information and upload html file from the result file</h4>
+  </div>
+  <div class="tab-pane" id="tab2">Tab2 Content</div>
+  <div class="tab-pane" id="tab3">Under Construction</div>
+</div>
+
+{% endblock %}

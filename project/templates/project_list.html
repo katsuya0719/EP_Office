@@ -1,8 +1,12 @@
 {% extends "base.html" %}
+{% load humanize %}
+{% load el_pagination_tags %}
+{% load render_table from django_tables2 %}
 {% block content %}
 
 <h1>Project</h1>
 <ul>
+{#{% render_table object_list %}#}
 
 <table class="table">
 <thead>
@@ -11,17 +15,24 @@
 		<th>Version</th>
 		<th>Program</th>
 		<th>Location</th>
+        <th>Area[m2]</th>
+        <th>EUI[kWh/m2]</th>
+        <th>Unmet hour[h]</th>
 		<th>Green certificate</th>
 		<th>User</th>
 	</tr>
 </thead>
 <tbody>
+{# % paginate object_list % #}
 {% for project in object_list %}
 	<tr>
-		<td><a href="{% url 'detail' project.pk %}">{{project.project}}</a></td>
-		<td>{{project.version}}</td>
-		<td>{{project.program}}</td>
+		<td><a href="{% url 'project:group' pk=project.project %}">{{project.project}}</a></td>
+		<td><a href="{% url 'project:detail' project.pk %}">{{project.version}}</a></td>
+		<td>{{project.program}}</a></td>
 		<td>{{project.location}}</td>
+        <td>{{project.area.total_area|floatformat:"0"|intcomma }}</td>
+        <td>{{project.energy.euipertotal|floatformat:"0"}}</td>
+        <td>{{project.unmet.heating|add:project.unmet.cooling}}</td>
 		<td>{{project.certificate}}</td>
 		<td>{{project.user}}</td>
 	</tr>
@@ -30,4 +41,5 @@
     <li>No projects yet.</li>
 {% endfor %}
 </ul>
+
 {% endblock %}

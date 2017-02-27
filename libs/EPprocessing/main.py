@@ -40,6 +40,7 @@ class ProcessHtml():
                 self.htables=readhtml.titletable(html)
                 name=file[0:-10]+'.csv'
 
+
     def extract_html(self):
         """
         extract required parameter from html file

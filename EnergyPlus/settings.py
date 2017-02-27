@@ -37,9 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'rest_framework',
+    'widget_tweaks',
+    'el_pagination',
+    'django_tables2',
+    'django_filters',
     'heatBalance',
     'project',
+    'ecm',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +136,8 @@ STATICFILES_DIRS = (
 #TEMPLATE_DIRS = ('templates/',)
 MEDIA_ROOT=os.path.join(BASE_DIR, 'data')
 #MEDIA_ROOT='/data/'
+
+
+#from django.conf.global_settings import TEMPLATES
+#TEMPLATES[0]['OPTIONS']['context_processors'].insert(0, 'django.core.context_processors.request')
+#TEMPLATES[0]['OPTIONS']['context_processors'].insert(0, 'django.core.context_processors.request')

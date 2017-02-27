@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>ECM List</h1>
+<ul>
+
+<table class="table">
+<thead>
+	<tr>
+		<th>Measures</th>
+		<th>Target</th>
+		<th>Description</th>
+		<th>Link</th>
+
+	</tr>
+</thead>
+<tbody>
+{% for project in object_list %}
+	<tr>
+		<td>{{project.name}}</td>
+		<td>{{project.target}}</td>
+		<td>{{project.description}}</td>
+		<td>{{project.link}}</td>
+	</tr>
+</tbody>
+{% empty %}
+    <li>No projects yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}

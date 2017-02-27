@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <form method="get">
+      <div class="well">
+          <h4 style="margin-top: 0">Project Search</h4>
+          <div class="row">
+              <div class="form-group col-sm-4 col-md-3">
+                  {{filter.form.project.label_tag}}
+                  {% render_field filter.form.project class="form-control" %}
+              </div>
+              <div class="form-group col-sm-4 col-md-3">
+                  {{filter.form.program.label_tag}}
+                  {% render_field filter.form.program class="form-control" %}
+              </div>
+              <div class="form-group col-sm-4 col-md-3">
+                  {{filter.form.location.label_tag}}
+                  {% render_field filter.form.location class="form-control" %}
+              </div>
+              <div class="form-group col-sm-4 col-md-3">
+                  {{filter.form.certificate.label_tag}}
+                  {% render_field filter.form.certificate class="form-control" %}
+              </div>
+              <div class="form-group col-sm-4 col-md-3">
+                  {{filter.form.user.label_tag}}
+                  {% render_field filter.form.user class="form-control" %}
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+              <span class=""glyphicon glyphicon-search"></span>Search
+          </button>
+      </div>
+  </form>
+
+  <table class="table">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Version</th>
+            <th>Program</th>
+            <th>Location</th>
+            <th>Area[m2]</th>
+            <th>EUI[kWh/m2]</th>
+            <th>Unmet hour[h]</th>
+            <th>Green certificate</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for project in filter.qs %}
+        <tr>
+            <td><a href="{% url 'project:group' pk=project.project %}">{{project.project}}</a></td>
+            <td><a href="{% url 'project:detail' project.pk %}">{{project.version}}</a></td>
+            <td>{{project.program}}</a></td>
+            <td>{{project.location}}</td>
+            <td>{{project.area.total_area|floatformat:"0"|intcomma }}</td>
+            <td>{{project.energy.euipertotal|floatformat:"0"}}</td>
+            <td>{{project.unmet.heating|add:project.unmet.cooling}}</td>
+            <td>{{project.certificate}}</td>
+            <td>{{project.user}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

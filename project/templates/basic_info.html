@@ -3,13 +3,14 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/bar.css' %}" />
 
-	<h2>{{object.project}}</h2>
+	<h2>{{object.project}} v_{{object.version}}</h2>
 	<div class="navbar navbar-inverse" role="navigation">
-	        <div class="navbar-inner">
-	        	<ul class="nav navbar-nav">
-				<li><a href="{% url 'project' %}">Basic info</a></li>
-	        		<li><a href="{% url 'project' %}">Heat balance</a></li>
-				<li><a href="{% url 'upload' %}">Time series</a></li>
+        <div class="navbar-inner">
+	        <ul class="nav navbar-nav">
+                <li><a href="{% url 'project:detail' object.pk %}">Summary</a></li>
+				<li><a href="{% url 'project:basic' object.pk %}">Basic info</a></li>
+	        	<li><a href="{% url 'project:heat' object.pk %}">Heat balance</a></li>
+				<li><a href="{% url 'project:time' object.pk %}">Time series</a></li>
 			</ul>
 		</div>
 	</div>
@@ -33,17 +34,8 @@
 
 
 <script type="text/javascript">
-    readcsv("{{energy}}");
-    renderAll("{{zone}}");
-    /*
-    hbarChart("{{zone}}","area",'#hbar');
-    hbarChart("{{zone}}","Light",'#hbar1');
-    hbarChart("{{zone}}","People",'#hbar2');
-    hbarChart("{{zone}}","Plug",'#hbar3');
-    hbarChart("{{zone}}","Plug",'#hbar3');
-    hbarChart("{{zone}}","WWR",'#hbar4');
-    hbarChart("{{zone}}","Glass",'#hbar5');
-    */
+    renderAll("{{object.loc.zone}}");
+
 </script>
 
 {% endblock %}

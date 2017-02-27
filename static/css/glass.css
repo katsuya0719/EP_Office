@@ -1,0 +1,15 @@
+.point {
+  fill: #2f225d;
+  stroke: #afa2dc;
+}
+div.tooltip{
+	background: lightsteelblue;	
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}

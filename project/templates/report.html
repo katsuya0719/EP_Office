@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bar.css' %}" />
+
+	<h2>{{object.project}}</h2>
+	<div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-inner">
+	        <ul class="nav navbar-nav">
+                <li><a href="{% url 'project:detail' object.pk %}">Summary</a></li>
+				<li><a href="{% url 'project:basic' object.pk %}">Basic info</a></li>
+	        	<li><a href="{% url 'project:heat' object.pk %}">Heat balance</a></li>
+				<li><a href="{% url 'project:time' object.pk %}">Time series</a></li>
+			</ul>
+		</div>
+	</div>
+
+<script src="{% static 'vendor/js/d3.js' %}"></script>
+<script src="{% static 'vendor/js/jquery-2.2.3.min.js' %}"></script>
+<script src="{% static 'js/hbar.js' %}"></script>
+
+
+<script type="text/javascript">
+    renderAll("{{zone}}");
+
+</script>
+
+{% endblock %}

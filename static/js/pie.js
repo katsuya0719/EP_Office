@@ -1,15 +1,17 @@
-function pieChart() {
+function pieChart(w,h) {
         var _chart = {};
 
-        var _width = 600, _height = 450,
+        var _width = w, _height = h,
                 _data = [],
-                _colors = d3.scale.category20(),
+                //_colors = d3.scale.category20(),
+                _colors = d3.scale.ordinal().range(["#ff0000","#3366ff","#fdfe02","#fdf498","#adff00","#74d600","#99ccff","#bbeeff","#77aaff","#5588ff","#cb2424","#fe5757","#ffbf00","#ffdc73","#c0c5ce","#adff00","#bae1ff","#ffb3ba"]),
                 _svg,
                 _bodyG,
                 _pieG,
                 _radius = 200,
                 _innerRadius = 100;
 
+        _colors.domain(["Heating","Cooling","Interior Lighting","Exterior Lighting","Interior Equipment","Exterior Equipment","Fans","","Pumps","Heat Rejection","Humidification","Heat Recovery","Water Systems","Refrigeration","Generators","Elevator","Ventilation (simple)","Water Heater"])
         var _div=d3.select("body").append("div")
                     .attr("class", "tooltip")
                     .style("opacity", 0);
@@ -32,12 +34,14 @@ function pieChart() {
 		      .style("text-anchor", "middle")
 		      .text( total+"MWh");
             }
-	    
-	    _colors.domain(category);
+
+	    console.log(category);
+	    //_colors.domain(category);
             renderBody(_svg);
         };
 
         function renderBody(svg) {
+        //prepare the place to locate pie chart
             if (!_bodyG)
                 _bodyG = svg.append("g")
                         .attr("class", "body");
@@ -46,11 +50,12 @@ function pieChart() {
         }
 
         function renderPie() {
+        //assign data to variable using layout which will be used in following functions(renderSlices,renderLabels) 
             var pie = d3.layout.pie() // <-A
                     .value(function (d) {
                         return d.electricity;
                     });
-
+	   console.log(pie);
             var arc = d3.svg.arc()
                     .outerRadius(_radius)
                     .innerRadius(_innerRadius);
@@ -78,7 +83,7 @@ function pieChart() {
                     .append("path")
                     .attr("class", "arc")
                     .attr("fill", function (d, i) {
-			    console.log(d);
+			    //console.log(d);
                         return _colors(d.data.category);
                     });
 
@@ -114,14 +119,29 @@ function pieChart() {
                         return "translate(" 
                             + arc.centroid(d) + ")"; // <-F
                     })
+                    /*
                     .attr("dy", ".35em")
                     .attr("text-anchor", "middle")
-                    .text(function (d) {
-                        return Math.round(d.data.electricity/1000)+"kWh";
-                    });
-		    
+                    */
+            labels.append('tspan')
+                .attr("dy", ".2em")
+                .attr("text-anchor", "middle")
+                .text(function (d) {
+                    return Math.round(d.data.electricity/1000)+"kWh";
+                })
+            /*
+            labels.append('tspan')
+                .attr("dy", "2em")
+                .attr("text-anchor", "middle")
+                .text(function (d) {
+                    return d.data.category;
+                });
+		    */
         }
 
+        function wordwrap(ele,cat){
+
+        };
         function renderLegend(svg){
             var legend = svg.selectAll(".legend")
                     .data(_colors.domain())
@@ -218,7 +238,7 @@ function pieChart() {
         });
     }
     
-    function readcsv(csv){
+    function readcsv(csv,w,h,r,ir){
 	    var arrele=[]
 	    var arrCate=[];
 	   d3.csv(csv,function(data){
@@ -247,17 +267,19 @@ function pieChart() {
 			    }
 			});
 		*/
-		ObjArraySort(data,"electricity","DESC")
-		
+
 		data.forEach(function(d){
+			console.log(d.category);
 			arrCate.push(d.category);
 		});
-		
+
+		ObjArraySort(data,"electricity","DESC")
+
 		var total=floatFormat(d3.sum(arrele)/1000,1);
 		
-		var chart = pieChart()
-		    .radius(200)
-		    .innerRadius(100)
+		var chart = pieChart(w,h)
+		    .radius(r)
+		    .innerRadius(ir)
 		    .data(data);
 		
 		var room=csv.split("/")[2]
