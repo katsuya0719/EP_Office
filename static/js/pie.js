@@ -55,7 +55,7 @@ function pieChart(w,h) {
                     .value(function (d) {
                         return d.electricity;
                     });
-	   console.log(pie);
+
             var arc = d3.svg.arc()
                     .outerRadius(_radius)
                     .innerRadius(_innerRadius);
@@ -129,6 +129,41 @@ function pieChart(w,h) {
                 .text(function (d) {
                     return Math.round(d.data.electricity/1000)+"kWh";
                 })
+                
+                .each(function(d){
+                    var bb=this.getBBox(),
+                        center = arc.centroid(d);
+
+                    console.log(bb);
+
+                    var topLeft = {
+                         x : center[0] + bb.x,
+                         y : center[1] + bb.y
+                       };
+
+                   var topRight = {
+                     x : topLeft.x + bb.width,
+                     y : topLeft.y
+                   };
+
+                   var bottomLeft = {
+                     x : topLeft.x,
+                     y : topLeft.y + bb.height
+                   };
+
+                   var bottomRight = {
+                     x : topLeft.x + bb.width,
+                     y : topLeft.y + bb.height
+                   };
+
+                   console.log()
+                   d.visible = pointIsInArc(topLeft, d, arc) &&
+                               pointIsInArc(topRight, d, arc) &&
+                               pointIsInArc(bottomLeft, d, arc) &&
+                               pointIsInArc(bottomRight, d, arc);
+                })
+                .style('display',function(d){ return d.visible ? null:"none"; });
+                
             /*
             labels.append('tspan')
                 .attr("dy", "2em")
@@ -139,9 +174,21 @@ function pieChart(w,h) {
 		    */
         }
 
-        function wordwrap(ele,cat){
+        function pointIsInArc(pt,ptData,d3Arc){
+            var r1=d3Arc.innerRadius()(ptData),
+                r2=d3Arc.outerRadius()(ptData),
+                theta1=d3Arc.startAngle()(ptData),
+                theta2=d3Arc.endAngle()(ptData);
 
+            var dist = pt.x*pt.x+pt.y*pt.y,
+                angle=Math.atan2(pt.x,-pt.y);
+
+            angle=(angle < 0) ? (angle + Math.PI * 2):angle;
+
+            return (r1*r1<=dist)&&(dist<=r2*r2)&&(theta1<=angle)&&(angle<=theta2);
         };
+
+
         function renderLegend(svg){
             var legend = svg.selectAll(".legend")
                     .data(_colors.domain())
