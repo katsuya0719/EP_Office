@@ -83,7 +83,6 @@ function pieChart(w,h) {
                     .append("path")
                     .attr("class", "arc")
                     .attr("fill", function (d, i) {
-			    //console.log(d);
                         return _colors(d.data.category);
                     });
 
@@ -156,7 +155,6 @@ function pieChart(w,h) {
                      y : topLeft.y + bb.height
                    };
 
-                   console.log()
                    d.visible = pointIsInArc(topLeft, d, arc) &&
                                pointIsInArc(topRight, d, arc) &&
                                pointIsInArc(bottomLeft, d, arc) &&
@@ -173,6 +171,7 @@ function pieChart(w,h) {
                 });
 		    */
         }
+
 
         function pointIsInArc(pt,ptData,d3Arc){
             var r1=d3Arc.innerRadius()(ptData),
