@@ -106,6 +106,7 @@ function pieChart(w,h) {
         }
 
         function renderLabels(pie, arc) {
+            console.log(_data)
             var labels = _pieG.selectAll("text.label")
                     .data(pie(_data)); // <-E
 

@@ -52,21 +52,45 @@ function plotGraph(obj){
     y.domain([0, ylim]).nice();
     z.domain(category);
 
+    //attach data to varable
     var graph=g.selectAll(".serie")
       .data(stack.keys(category)(electricity))
       .enter();
 
+    console.log(stack.keys(category)(electricity))
     graph.append("g")
       .attr("class", "serie")
       .attr("fill", function(d) { return z(d.key); })
     .selectAll("rect")
-       .data(function(d) { return d; })
+       .data(function(d) { return d; })//ここの文法 need investigate
        .enter().append("rect")
        .attr("x", function(d) { return x(d.data.version)+x.bandwidth()/4; })
        .attr("y", function(d) { return y(d[1]); })
        .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-       .attr("width", x.bandwidth()/2);
+       .attr("width", x.bandwidth()/2)
 
+    graph.selectAll(".bartext")
+      .data(function(d) { return d; })
+      .enter()
+      .append("text")
+      .attr("class","bartext")
+      .attr("text-anchor","middle")
+      .attr("x", function(d) { return x(d.data.version)+x.bandwidth()/2; })
+      .attr("y", function(d) { return y((d[0]+d[1])*0.5); })
+      .text(function (d) {
+        return floatFormat(d[1]-d[0],2);
+      })
+      .each(function(d){
+      var value=floatFormat(d[1]-d[0],3);
+      console.log(value);
+        if (value==0){
+          d.visible=false;
+        }else{
+          d.visible=true;
+        };
+      })
+      .style('display',function(d){ return d.visible ? null:"none"; });
+  　//add xaxis
     g.append("g")
           .attr("class", "axis axis--x")
           .attr("transform", "translate(0," + height + ")")
@@ -74,6 +98,7 @@ function plotGraph(obj){
         .selectAll("text")
          .style("text-anchor", "center");
 
+      //add yaxis
       g.append("g")
           .attr("class", "axis axis--y")
           //.call(d3.axisLeft(y).ticks(10, "s"))
@@ -154,6 +179,11 @@ function fitstruct(list,data){
         return electricity
       };
 
+function floatFormat( number, n ) {
+    var _pow = Math.pow( 10 , n ) ;
+
+    return Math.round( number * _pow ) / _pow ;
+    };
 
 function loadDataSet(option){
 	var files = option["files"];
