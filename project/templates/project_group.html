@@ -13,6 +13,8 @@
 	<thead>
 		<tr>
 			<th>Version</th>
+			<th>Diff</th>
+			<th>ECMs</th>
 			<th>Area[m2]</th>
 			<th>EUI[kWh/m2]</th>
 			<th>Unmet hour[h]</th>
@@ -22,6 +24,8 @@
 	{% for project in object_list %}
 		<tr>
 			<td><a href="{% url 'project:detail' project.pk %}">{{project.version}}</a></td>
+			<td>{{project.diff}}</td>
+			<td>{% for ecm in project.ecms.all %} {{ecm}} /{% endfor %}</td>
 			<td>{{project.area.total_area|floatformat:"0"}}</td>
 			<td>{{project.energy.euipertotal|floatformat:"0"}}</td>
 			<td>{{project.unmet.heating|add:project.unmet.cooling}}</td>

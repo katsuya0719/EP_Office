@@ -134,8 +134,6 @@ function pieChart(w,h) {
                     var bb=this.getBBox(),
                         center = arc.centroid(d);
 
-                    console.log(bb);
-
                     var topLeft = {
                          x : center[0] + bb.x,
                          y : center[1] + bb.y
@@ -307,13 +305,6 @@ function pieChart(w,h) {
 		  d.electricity= +d["Electricity [kWh]"];
 		  arrele.push(d.electricity);
 		});
-		/*
-		var data = data.filter(function(item){
-			if (item.electricity>0){
-			    return true;
-			    }
-			});
-		*/
 
 		data.forEach(function(d){
 			console.log(d.category);
@@ -324,6 +315,11 @@ function pieChart(w,h) {
 
 		var total=floatFormat(d3.sum(arrele)/1000,1);
 		
+        data.forEach(function(d){
+            var perc=floatFormat(d.electricity/d3.sum(arrele)*100,1);
+            console.log(perc);
+            d.percentage= perc;
+        })
 		var chart = pieChart(w,h)
 		    .radius(r)
 		    .innerRadius(ir)
