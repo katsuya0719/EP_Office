@@ -66,10 +66,16 @@ class timeView(ListView):
 class helpView(ListView):
     template_name="help.html"
 
+def download_csv(request,queryset):
+    response=HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=data.csv'
+    print (queryset)
+
+
 def model_form_upload(request):
-    print(request.FILES)
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
+        print (form)
         if form.is_valid():
             newhtml = form.save()
             # newDoc=html(html=request.FILES['html'])

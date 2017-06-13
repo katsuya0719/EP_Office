@@ -19,7 +19,7 @@ from .filters import ProjectFilter
 from rest_framework import routers
 from django.contrib import admin
 from heatBalance import views
-from .views import model_form_upload,ListView,DetailView,basic,ProjectView,heatView,reportView,timeView
+from .views import model_form_upload,ListView,DetailView,basic,ProjectView,heatView,reportView,timeView,download_csv
 
 app_name="project"
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/heat$',heatView.as_view(),name='heat'),
     url(r'^(?P<pk>\d+)/time$',timeView.as_view(),name='time'),
     url(r'^(?P<pk>[\w-]+)/$',ProjectView.as_view(),name='group'),
+    url(r'^(?P<pk>\d+)/download$',download_csv,name='download'),
     url(r'^(?P<pk>[\w-]+)/report$',reportView.as_view(),name='report'),
 ]
