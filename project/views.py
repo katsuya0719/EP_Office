@@ -11,7 +11,8 @@ import os
 import pandas
 from django.conf import settings
 from django.core.urlresolvers import reverse
-
+from io import BytesIO
+import zipfile
 
 
 # Create your views here.
@@ -24,7 +25,6 @@ class ListView(ListView):
 class DetailView(DetailView):
     model = html
     template_name = 'project_detail.html'
-
 
     def makepath(self, data, strcsv):
         abspath = str(os.path.join((os.path.dirname(data["object"].html.path)), strcsv))
@@ -66,10 +66,18 @@ class timeView(ListView):
 class helpView(ListView):
     template_name="help.html"
 
-def download_csv(request,queryset):
+def download_csv(request,pk):
+    #query the data we want to download
+    obj=html.objects.get(pk=pk)
+
+    memory_file = BytesIO
+    csv_zip = zipfile.ZipFile(memory_file, 'w')
+    csv_zip.writestr()
+
     response=HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=data.csv'
-    print (queryset)
+    print(pk)
+    return response
 
 
 def model_form_upload(request):
