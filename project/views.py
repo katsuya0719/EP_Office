@@ -13,7 +13,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from io import BytesIO
 import zipfile
-
+from io import StringIO
 
 # Create your views here.
 class ListView(ListView):
@@ -69,14 +69,37 @@ class helpView(ListView):
 def download_csv(request,pk):
     #query the data we want to download
     obj=html.objects.get(pk=pk)
+    loc=obj.loc
+    fields=loc._meta.get_fields()
+    filenames=[]
+    for f in fields:
+        csvpath=getattr(loc, f.name)
+        if str(csvpath).endswith("csv"):
+            filenames.append(csvpath)
 
-    memory_file = BytesIO
-    csv_zip = zipfile.ZipFile(memory_file, 'w')
-    csv_zip.writestr()
+    zip_subdir = "somefiles"
+    zip_filename = "%s.zip" % zip_subdir
 
-    response=HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=data.csv'
-    print(pk)
+    s=StringIO()
+    b=BytesIO()
+    zf = zipfile.ZipFile(b, 'w')
+
+    for fpath in filenames:
+        fdir,fname=os.path.split(fpath)
+        print (fdir,fname)
+        zip_path=os.path.join(zip_subdir,fname)
+        #print(zip_path)
+
+        fpath1=fpath[6:].replace("static","data")
+        print (fpath1,fpath)
+        print (os.listdir("data/html/LukHopSt_BEAM_1st0"))
+        #zf.write(fpath1,zip_path)getting error here
+        zf.write(fpath1)
+    zf.close()
+
+    response=HttpResponse(s.getvalue(),mimetype = "application/x-zip-compressed")
+    response['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+
     return response
 
 
@@ -102,7 +125,7 @@ def model_form_upload(request):
             #root=dest+"\\"
             root="../../static"+dest[len(settings.MEDIA_ROOT):].replace("\\", "/")+"/"
             print("directory:"+root)
-            colList=["Cooling","EIUI","EIUIcon","Energy","Fan","Glass","HeatBalance","HVAC","HW","Light","OAaverage","OAmin","Opaque","Pump","UnmetDetail","WWR","WWRcon","Zone"]
+            colList=["Cooling","ELUI","ELUIcon","Energy","Fan","Glass","HeatBalance","HVAC","HW","Light","OAaverage","OAmin","Opaque","Pump","UnmetDetail","WWR","WWRcon","Zone"]
             ext=".csv"
             register_loc(root,ext,colList,loc,newhtml)
 

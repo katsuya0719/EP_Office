@@ -55,8 +55,8 @@ class ProcessHtml():
         WWR=self.convert_df(htables[13][1])
         WWRcon=self.convert_df(htables[14][1])
         ZoneSummary=self.convert_df(htables[16][1])
-        ElUIcon=self.convert_df(htables[20][1])
-        ElUI=self.convert_df(htables[21][1])
+        ELUIcon=self.convert_df(htables[20][1])
+        ELUI=self.convert_df(htables[21][1])
         Opaque=self.convert_df(htables[24][1])
         Glazing=self.convert_df(htables[25][1])
         InLight=self.convert_df(htables[30][1])
@@ -71,8 +71,8 @@ class ProcessHtml():
         HVAC=self.convert_df(htables[53][1])
         self.HeatBalance=self.convert_df(htables[63][1])
 
-        value=[EUI,Area,Energy,Unmet,WWR,WWRcon,ZoneSummary,ElUIcon,ElUI,Opaque,Glazing,InLight,Fan,Pump,HW,Cooling,Heating,UnmetDetail,OAaverage,OAmin,HVAC,self.HeatBalance]
-        k=["EUI","Area","Energy","Unmet","WWR","WWRcon","Zone","ElUIcon","ElUI","Opaque","Glass","Light","Fan","Pump","HW","Cooling","Heating","UnmetDetail","OAaverage","OAmin","HVAC","HeatBalance"]
+        value=[EUI,Area,Energy,Unmet,WWR,WWRcon,ZoneSummary,ELUIcon,ELUI,Opaque,Glazing,InLight,Fan,Pump,HW,Cooling,Heating,UnmetDetail,OAaverage,OAmin,HVAC,self.HeatBalance]
+        k=["EUI","Area","Energy","Unmet","WWR","WWRcon","Zone","ELUIcon","ELUI","Opaque","Glass","Light","Fan","Pump","HW","Cooling","Heating","UnmetDetail","OAaverage","OAmin","HVAC","HeatBalance"]
         self.db=dict(zip(k,value))
         
         return self.db

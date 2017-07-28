@@ -284,6 +284,7 @@ function pieChart(w,h) {
     }
     
     function readcsv(csv,w,h,r,ir){
+        console.log(csv)
 	    var arrele=[]
 	    var arrCate=[];
 	   d3.csv(csv,function(data){
