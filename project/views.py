@@ -11,8 +11,9 @@ import os
 import pandas
 from django.conf import settings
 from django.core.urlresolvers import reverse
-
-
+from io import BytesIO
+import zipfile
+from io import StringIO
 
 # Create your views here.
 class ListView(ListView):
@@ -24,7 +25,6 @@ class ListView(ListView):
 class DetailView(DetailView):
     model = html
     template_name = 'project_detail.html'
-
 
     def makepath(self, data, strcsv):
         abspath = str(os.path.join((os.path.dirname(data["object"].html.path)), strcsv))
@@ -66,10 +66,38 @@ class timeView(ListView):
 class helpView(ListView):
     template_name="help.html"
 
-def download_csv(request,queryset):
-    response=HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=data.csv'
-    print (queryset)
+def download_csv(request,pk):
+    #query the data we want to download
+    obj=html.objects.get(pk=pk)
+    loc=obj.loc
+    fields=loc._meta.get_fields()
+    filenames=[]
+    for f in fields:
+        csvpath=getattr(loc, f.name)
+        if str(csvpath).endswith("csv"):
+            filenames.append(csvpath)
+
+    print(filenames[0])
+    zip_subdir = "result_csv"
+    zip_filename = "%s.zip" % zip_subdir
+
+    s=StringIO()
+    b=BytesIO()
+    zf = zipfile.ZipFile(b, 'w')
+
+    for fpath in filenames:
+        fdir,fname=os.path.split(fpath)
+        zip_path=os.path.join(zip_subdir,fname)
+        #print(zip_path)
+
+        fpath1=fpath[6:].replace("static","data")
+        zf.write(fpath1)
+    zf.close()
+
+    response=HttpResponse(b.getvalue(),content_type = "application/x-zip-compressed")
+    response['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+
+    return response
 
 
 def model_form_upload(request):
@@ -94,7 +122,7 @@ def model_form_upload(request):
             #root=dest+"\\"
             root="../../static"+dest[len(settings.MEDIA_ROOT):].replace("\\", "/")+"/"
             print("directory:"+root)
-            colList=["Cooling","EIUI","EIUIcon","Energy","Fan","Glass","HeatBalance","HVAC","HW","Light","OAaverage","OAmin","Opaque","Pump","UnmetDetail","WWR","WWRcon","Zone"]
+            colList=["Cooling","ELUI","ELUIcon","Energy","Fan","Glass","HeatBalance","HVAC","HW","Light","OAaverage","OAmin","Opaque","Pump","UnmetDetail","WWR","WWRcon","Zone"]
             ext=".csv"
             register_loc(root,ext,colList,loc,newhtml)
 
