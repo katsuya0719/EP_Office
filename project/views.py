@@ -77,7 +77,8 @@ def download_csv(request,pk):
         if str(csvpath).endswith("csv"):
             filenames.append(csvpath)
 
-    zip_subdir = "somefiles"
+    print(filenames[0])
+    zip_subdir = "result_csv"
     zip_filename = "%s.zip" % zip_subdir
 
     s=StringIO()
@@ -86,18 +87,14 @@ def download_csv(request,pk):
 
     for fpath in filenames:
         fdir,fname=os.path.split(fpath)
-        print (fdir,fname)
         zip_path=os.path.join(zip_subdir,fname)
         #print(zip_path)
 
         fpath1=fpath[6:].replace("static","data")
-        print (fpath1,fpath)
-        print (os.listdir("data/html/LukHopSt_BEAM_1st0"))
-        #zf.write(fpath1,zip_path)getting error here
         zf.write(fpath1)
     zf.close()
 
-    response=HttpResponse(s.getvalue(),mimetype = "application/x-zip-compressed")
+    response=HttpResponse(b.getvalue(),content_type = "application/x-zip-compressed")
     response['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
 
     return response
