@@ -11,5 +11,5 @@ class DocumentForm(forms.ModelForm):
 		
 	class Meta:
 		model=html
-		fields=['project','version','ecms','diff','program','location','certificate','user','html']
+		fields=['project','diff','version','program','location','certificate','user','html']
 		widgets={'ecms':forms.CheckboxSelectMultiple}

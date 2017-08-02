@@ -5,48 +5,38 @@ from ecm.models import ecm
 def dir_path(instance, filename):
 	return 'html/{0}/{1}'.format(instance.project, filename)
 
+def epw_path(instance, filename):
+	return 'epw/{0}'.format(filename)
 
 # Create your models here.
-class html(models.Model):
+class location(models.Model):
+	name=models.CharField(max_length=50,blank=True)
+	epw=models.FileField(upload_to=epw_path)
+
+class program(models.Model):
+	program=models.CharField(max_length=30)
+
+class project(models.Model):
 	project = models.CharField(max_length=50, blank=True)
+	location=models.ForeignKey(location,related_name='project')
+	program=models.ForeignKey(program,related_name='project')
+
+class scheme(models.Model):
+	project=models.ForeignKey(project,related_name='schemes',on_delete=models.CASCADE)
+	SCHEME_CHOICES = (
+		('LEED_v3_baseline', 'LEED_v3_baseline'),
+		('LEED_v4_baseline', 'LEED_v4_baseline'),
+		('BEAM+_baseline', 'BEAM+_baseline'),
+		('Proposed', 'Proposed')
+	)
+	scheme = models.CharField(max_length=30, choices=SCHEME_CHOICES, default='BEAM+_baseline')
+	configuration=models.TextField()
+	ecms = models.ManyToManyField(ecm, blank=True)
+
+class html(models.Model):
+	scheme=models.ForeignKey(scheme,related_name='html',on_delete=models.CASCADE)
 	version = models.IntegerField(default=0)
-	ecms=models.ManyToManyField(ecm, blank=True)
 	diff = models.TextField(blank=True)
-	PROGRAM_CHOICES = (
-		('Office', 'General office'),
-		('Residential', 'Residential'),
-		('Retail', 'Retail'),
-		('Restaurant', 'Restaurant'),
-		('Grocery', 'Grocery store'),
-		('Medilcal', 'Medilcal office'),
-		('Research', 'R&D or laboratory'),
-		('Hotel', 'Hotel'),
-		('Daycare', 'Daycare'),
-		('K-12', 'Educational,K-12'),
-		('Postsecondary', 'Educational,postsecondary'),
-		('Airport', 'Airport'),
-		('DataCenter','Data Center'),
-		('DistributionCenter','Distribution center,warehouse')
-	)
-	program = models.CharField(max_length=20, choices=PROGRAM_CHOICES, default='Retail')
-	LOCATION_CHOICES = (
-		('Beijing', 'Beijing'),
-		('China', 'China'),
-		('Hong Kong', 'Hong Kong'),
-		('Japan', 'Japan'),
-		('Shanghai', 'Shanghai'),
-		('Shenzhen', 'Shenzhen'),
-		('Taiwan', 'Taiwan')
-	)
-	location = models.CharField(max_length=15, choices=LOCATION_CHOICES, default="Hong Kong")
-	CERTIFICATE_CHOICES = (
-		('LEED_v3', 'LEED_v3'),
-		('LEED_v4', 'LEED_v4'),
-		('BEAM+', 'BEAM+'),
-		('WELL', 'WELL')
-	)
-	certificate = models.CharField(max_length=10, choices=CERTIFICATE_CHOICES, default='BEAM+')
-	user = models.CharField(max_length=20, default='test')
 	html = models.FileField(upload_to=dir_path)
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 
