@@ -1,13 +1,13 @@
 import django_filters
-from .models import html
+from .models import html,project
 
 class ProjectFilter(django_filters.FilterSet):
     #program=django_filters.ChoiceFilter(choices=html.PROGRAM_CHOICES)
     user=django_filters.CharFilter(lookup_expr="iexact")
     project=django_filters.CharFilter(lookup_expr="icontains")
     class Meta:
-        model=html
-        fields=['project','program','location','certificate','user']
+        model=project
+        fields=['project','program','location']
 
     def __init__(self, *args, **kwargs):
         super(ProjectFilter, self).__init__(*args,**kwargs)
