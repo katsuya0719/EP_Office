@@ -17,7 +17,7 @@ from django.conf.urls import url,include
 from rest_framework import routers
 from django.contrib import admin
 from heatBalance import views
-from project.views import model_form_upload,basic,helpView
+from project.views import model_form_upload,basic,helpView,UploadView
 
 #router=routers.DefaultRouter()
 #router.register(r'heat',views.heatBalViewSet)
@@ -25,7 +25,7 @@ from project.views import model_form_upload,basic,helpView
 urlpatterns = [
     #url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^upload/$',model_form_upload,name='upload'),
+    url(r'^upload/$',UploadView.as_view(),name='upload'),
     url(r'^project/',include('project.urls')),
     url(r'^help/$',helpView.as_view(),name='help'),
     url(r'^ecm/',include('ecm.urls')),

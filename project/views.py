@@ -1,9 +1,10 @@
 from django.shortcuts import render,get_object_or_404
-from project.models import html, area, unmet, wwr, energy, loc
-from project.forms import DocumentForm
+from project.models import html, area, unmet, wwr, energy, loc,scheme,project
+from project.forms import DocumentForm,htmlFormSet
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic import CreateView
 from libs.EPprocessing.main import ProcessHtml
 # from EnergyPlus import settings
 from django.core.files import File
@@ -14,6 +15,7 @@ from django.core.urlresolvers import reverse
 from io import BytesIO
 import zipfile
 from io import StringIO
+from django.db import transaction
 
 # Create your views here.
 class ListView(ListView):
@@ -98,6 +100,32 @@ def download_csv(request,pk):
     response['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
 
     return response
+
+class UploadView(CreateView):
+    model = scheme
+    fields = ['project','scheme','configuration']
+    success_url = reverse('project:index')
+
+    def get_context_data(self,**kwargs):
+        data = super(UploadView,self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['version'] = htmlFormSet(self.request.POST)
+
+        else:
+            data['version']=htmlFormSet()
+
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        version = context['version']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if version.is_valid():
+                version.instance = self.object
+                version.save()
+            return super(UploadView,self).form_valid(form)
 
 
 def model_form_upload(request):
