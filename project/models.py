@@ -16,6 +16,9 @@ class location(models.Model):
 class program(models.Model):
 	program=models.CharField(max_length=30)
 
+	def __str__(self):
+		return self.program
+
 class project(models.Model):
 	project = models.CharField(max_length=50, blank=True)
 	location=models.ForeignKey(location,related_name='project')
@@ -41,7 +44,7 @@ class html(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
-		return self.project+"_v"+str(self.version)
+		return self.scheme+"_v"+str(self.version)
 
 
 class area(models.Model):
