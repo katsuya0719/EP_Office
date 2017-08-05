@@ -9,10 +9,11 @@
 
     <body>
 	{% block content %}
+    <h3>Select project and schems you want to upload</h3>
         <div class="col-md-4">
             <form action="" method="post">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{ form.as_p }}
                 <table class="table">
                     {{ version.management_form }}
 
@@ -44,11 +45,6 @@
                 <input type="submit" value="Next Page"/>
             </form>
         </div>
-		<form method="post" enctype="multipart/form-data">
-			{% csrf_token %}
-			{{form.as_p}}
-			<button type="submit">Upload</button>
-		</form>
 	{% endblock %}
 	</body>
 </html>

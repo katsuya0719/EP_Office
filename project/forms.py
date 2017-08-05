@@ -12,5 +12,9 @@ class SchemeForm(ModelForm):
         model=scheme
         exclude=()
 
-htmlFormSet=inlineformset_factory(project,scheme,form=SchemeForm)
+htmlFormSet=inlineformset_factory(project,
+                                  scheme,
+                                  extra=1,
+                                  can_delete=False,
+                                  form=SchemeForm)
 

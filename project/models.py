@@ -13,6 +13,9 @@ class location(models.Model):
 	name=models.CharField(max_length=50,blank=True)
 	epw=models.FileField(upload_to=epw_path)
 
+	def __str__(self):
+		return self.name
+
 class program(models.Model):
 	program=models.CharField(max_length=30)
 
