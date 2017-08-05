@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from project.models import html, area, unmet, wwr, energy, loc,scheme,project
-from project.forms import DocumentForm,htmlFormSet
+from project.forms import DocumentForm,htmlFormSet,SchemeForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -102,30 +102,31 @@ def download_csv(request,pk):
     return response
 
 class UploadView(CreateView):
-    model = scheme
-    fields = ['project','scheme','configuration']
+    model = project
+    fields = ['project','location','program']
     template_name = 'scheme_form.html'
     #success_url = reverse('project:index')
 
     def get_context_data(self,**kwargs):
         data = super(UploadView,self).get_context_data(**kwargs)
         if self.request.POST:
-            data['versions'] = htmlFormSet(self.request.POST)
+            data['schemes'] = htmlFormSet(self.request.POST)
 
         else:
-            data['versions']=htmlFormSet()
+            data['schemes']=htmlFormSet()
 
+        print(data['schemes'])
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
-        versions = context['versions']
+        schemes = context['schemes']
         with transaction.atomic():
             self.object = form.save()
 
-            if versions.is_valid():
-                versions.instance = self.object
-                versions.save()
+            if schemes.is_valid():
+                schemes.instance = self.object
+                schemes.save()
             return super(UploadView,self).form_valid(form)
 
 

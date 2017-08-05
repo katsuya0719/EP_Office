@@ -16,7 +16,7 @@
                 <table class="table">
                     {{ version.management_form }}
 
-                    {% for form in versions.forms %}
+                    {% for form in schemes.forms %}
                         {% if forloop.first %}
                             <thead>
                             <tr>
@@ -41,7 +41,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-                <input type="submit" value="Save"/>
+                <input type="submit" value="Next Page"/>
             </form>
         </div>
 		<form method="post" enctype="multipart/form-data">
