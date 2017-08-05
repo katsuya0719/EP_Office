@@ -1,10 +1,54 @@
+{% extends "base.html" %}
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Minimal Django File Upload Example</title>
+    </head>
+
+    <body>
+	{% block content %}
+        <div class="col-md-4">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <table class="table">
+                    {{ version.management_form }}
+
+                    {% for form in versions.forms %}
+                        {% if forloop.first %}
+                            <thead>
+                            <tr>
+                                {% for field in form.visible_fields %}
+                                    <th>{{field.label|capfirst}}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                        {% endif %}
+                        <tr class="{% cycle "row1" "row2" %} formset_row">
+                            {% for field in form.visible_fields %}
+                                <td>
+                                    {% if forloop.first %}
+                                        {% for hidden in form.hidden_fields %}
+                                            {{hidden}}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {{field.errors.as_ul }}
+                                    {{field}}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="submit" value="Save"/>
+            </form>
+        </div>
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{form.as_p}}
+			<button type="submit">Upload</button>
+		</form>
+	{% endblock %}
+	</body>
 </html>

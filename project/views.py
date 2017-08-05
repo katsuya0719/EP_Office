@@ -104,27 +104,28 @@ def download_csv(request,pk):
 class UploadView(CreateView):
     model = scheme
     fields = ['project','scheme','configuration']
-    success_url = reverse('project:index')
+    template_name = 'scheme_form.html'
+    #success_url = reverse('project:index')
 
     def get_context_data(self,**kwargs):
         data = super(UploadView,self).get_context_data(**kwargs)
         if self.request.POST:
-            data['version'] = htmlFormSet(self.request.POST)
+            data['versions'] = htmlFormSet(self.request.POST)
 
         else:
-            data['version']=htmlFormSet()
+            data['versions']=htmlFormSet()
 
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
-        version = context['version']
+        versions = context['versions']
         with transaction.atomic():
             self.object = form.save()
 
-            if version.is_valid():
-                version.instance = self.object
-                version.save()
+            if versions.is_valid():
+                versions.instance = self.object
+                versions.save()
             return super(UploadView,self).form_valid(form)
 
 
