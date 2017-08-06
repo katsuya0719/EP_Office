@@ -16,6 +16,8 @@ from io import BytesIO
 import zipfile
 from io import StringIO
 from django.db import transaction
+from formtools.wizard.views import SessionWizardView
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 class ListView(ListView):
@@ -100,6 +102,30 @@ def download_csv(request,pk):
     response['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
 
     return response
+
+def UploadFunction(request):
+    form=Wizard.as_view([Form1,Form2])
+
+TRANSFER_FORMS = [
+    ("step1", SchemeForm),
+    ("step2", DocumentForm),
+]
+TRANSFER_TEMPLATES = {
+    "step1":'scheme_form.html',
+    "step2":"help.html",
+}
+
+class Wizard(SessionWizardView):
+    location=os.path.join(settings.MEDIA_ROOT,'data','temp')
+    print (location)
+    file_storage = FileSystemStorage(location)
+
+    def get_template_names(self):
+        return [TRANSFER_TEMPLATES[self.steps.current]]
+
+
+
+form_wizard_view = Wizard.as_view(TRANSFER_FORMS)
 
 class UploadView(CreateView):
     model = project
