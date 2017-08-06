@@ -107,7 +107,7 @@ def UploadFunction(request):
     form=Wizard.as_view([Form1,Form2])
 
 TRANSFER_FORMS = [
-    ("step1", SchemeForm),
+    ("step1", htmlFormSet),
     ("step2", DocumentForm),
 ]
 TRANSFER_TEMPLATES = {
