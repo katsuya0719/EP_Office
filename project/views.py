@@ -152,12 +152,23 @@ class UploadWizard(SessionWizardView):
     def get_template_names(self):
         return [TRANSFER_TEMPLATES[self.steps.current]]
 
+    def get_form_initial(self, step):
+        if step == self.step3:
+            form_class=self.form_list[step]
+            data1=self.get_cleaned_data_for_step(self.step1)
+            data2 = self.get_cleaned_data_for_step(self.step2)
+            print(data1)
+            if data1 is not None:
+                extra = get_ex
+
+
     def done(self, form_list, **kwargs):
         print(form_list[0])
         print(form_list[1])
         print(form_list[2])
         upload_file=form_list[0].cleaned_data('my_file')
         self.file_storage.delete(upload_file.name)
+
 
 
 form_wizard_view = UploadWizard.as_view(TRANSFER_FORMS)

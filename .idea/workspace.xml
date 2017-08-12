@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8d9d9a17-5b13-4465-adc5-71e5306e4188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EnergyPlus/urls.py" afterPath="$PROJECT_DIR$/EnergyPlus/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/forms.py" afterPath="$PROJECT_DIR$/project/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/models.py" afterPath="$PROJECT_DIR$/project/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/views.py" afterPath="$PROJECT_DIR$/project/views.py" />
     </list>
     <ignored path="DjangoEP-master.iws" />
@@ -27,16 +24,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="154" column="40" lean-forward="true" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="40" />
+            <state relative-caret-position="594">
+              <caret line="161" column="30" lean-forward="true" selection-start-line="161" selection-start-column="30" selection-end-line="161" selection-end-column="30" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
                 <element signature="e#2266#3120#0" expanded="false" />
-                <element signature="e#4730#5539#0" expanded="false" />
-                <element signature="e#5578#6845#0" expanded="false" />
+                <element signature="e#5060#5869#0" expanded="false" />
+                <element signature="e#5908#7175#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -52,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="30" column="27" lean-forward="false" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+            <state relative-caret-position="242">
+              <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -85,8 +82,8 @@
       <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="330">
+              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
                 <element signature="e#0#57#0" expanded="true" />
               </folding>
@@ -176,11 +173,11 @@
         <option value="$PROJECT_DIR$/project/admin.py" />
         <option value="$PROJECT_DIR$/project/templates/upload2.html" />
         <option value="$PROJECT_DIR$/project/templates/scheme_form.html" />
-        <option value="$PROJECT_DIR$/project/views.py" />
         <option value="$PROJECT_DIR$/EnergyPlus/urls.py" />
-        <option value="$PROJECT_DIR$/project/forms.py" />
         <option value="$PROJECT_DIR$/EnergyPlus/settings.py" />
         <option value="$PROJECT_DIR$/project/models.py" />
+        <option value="$PROJECT_DIR$/project/forms.py" />
+        <option value="$PROJECT_DIR$/project/views.py" />
       </list>
     </option>
   </component>
@@ -559,7 +556,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1918" height="1028" extended-state="1" />
+    <frame x="1" y="1" width="1918" height="1028" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18105263" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -944,29 +941,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="154" column="40" lean-forward="true" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-            <element signature="e#2266#3120#0" expanded="false" />
-            <element signature="e#4730#5539#0" expanded="false" />
-            <element signature="e#5578#6845#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EnergyPlus/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="770">
@@ -987,9 +961,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/project/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="30" column="27" lean-forward="false" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+        <state relative-caret-position="242">
+          <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="161" column="30" lean-forward="true" selection-start-line="161" selection-start-column="30" selection-end-line="161" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#2266#3120#0" expanded="false" />
+            <element signature="e#5060#5869#0" expanded="false" />
+            <element signature="e#5908#7175#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

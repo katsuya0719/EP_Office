@@ -12,7 +12,7 @@ class DocumentForm(ModelForm):
 class SchemeForm(ModelForm):
     class Meta:
         model=scheme
-        exclude=['project','configuration','ecm']
+        exclude=['project','configuration','ecms']
 
 htmlFormSet=inlineformset_factory(project,
                                   scheme,
@@ -21,7 +21,7 @@ htmlFormSet=inlineformset_factory(project,
                                   form=SchemeForm)
 
 class ProjectForm(ModelForm):
-    location=forms.ModelChoiceField(queryset=project.objects.all(),widget=autocomplete.ModelSelect2(url='project-autocomplete'))
+    #location=forms.ModelChoiceField(queryset=project.objects.all(),widget=autocomplete.ModelSelect2(url='project-autocomplete'))
     class Meta:
         model=project
         exclude=()
