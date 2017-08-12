@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from project.models import html, area, unmet, wwr, energy, loc,scheme,project
-from project.forms import DocumentForm,htmlFormSet,SchemeForm
+from project.forms import DocumentForm,htmlFormSet,SchemeForm,ProjectForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -106,6 +106,7 @@ def download_csv(request,pk):
 def UploadFunction(request):
     form=Wizard.as_view([Form1,Form2])
 
+"""
 TRANSFER_FORMS = [
     ("step1", htmlFormSet),
     ("step2", DocumentForm),
@@ -130,6 +131,34 @@ class Wizard(SessionWizardView):
         self.file_storage.delete(upload_file.name)
 
 form_wizard_view = Wizard.as_view(TRANSFER_FORMS)
+"""
+TRANSFER_FORMS = [
+    ("step1", ProjectForm),
+    ("step2", SchemeForm),
+    ("step3", DocumentForm),
+]
+TRANSFER_TEMPLATES = {
+    "step1":"upload2.html",
+    "step2":"upload2.html",
+    "step3":"upload2.html"
+}
+class UploadWizard(SessionWizardView):
+    location=os.path.join(settings.MEDIA_ROOT,'data','temp')
+    print (location)
+    file_storage = FileSystemStorage(location)
+
+    def get_template_names(self):
+        return [TRANSFER_TEMPLATES[self.steps.current]]
+
+    def done(self, form_list, **kwargs):
+        print(form_list[0])
+        print(form_list[1])
+        print(form_list[2])
+        upload_file=form_list[0].cleaned_data('my_file')
+        self.file_storage.delete(upload_file.name)
+
+
+form_wizard_view = UploadWizard.as_view(TRANSFER_FORMS)
 
 class UploadView(CreateView):
     model = project

@@ -18,3 +18,8 @@ htmlFormSet=inlineformset_factory(project,
                                   can_delete=False,
                                   form=SchemeForm)
 
+class ProjectForm(ModelForm):
+    class Meta:
+        model=project
+        exclude=()
+
