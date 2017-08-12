@@ -107,6 +107,7 @@ def UploadFunction(request):
     form=Wizard.as_view([Form1,Form2])
 
 """
+#This can be used if I can combine wizard and inline form
 TRANSFER_FORMS = [
     ("step1", htmlFormSet),
     ("step2", DocumentForm),
