@@ -106,7 +106,6 @@ def download_csv(request,pk):
 def UploadFunction(request):
     form=Wizard.as_view([Form1,Form2])
 
-"""
 TRANSFER_FORMS = [
     ("step1", htmlFormSet),
     ("step2", DocumentForm),
@@ -159,7 +158,7 @@ class UploadWizard(SessionWizardView):
 
 
 form_wizard_view = UploadWizard.as_view(TRANSFER_FORMS)
-
+"""
 class UploadView(CreateView):
     model = project
     fields = ['project','location','program']

@@ -10,7 +10,7 @@ class DocumentForm(ModelForm):
 class SchemeForm(ModelForm):
     class Meta:
         model=scheme
-        exclude=()
+        exclude=['project']
 
 htmlFormSet=inlineformset_factory(project,
                                   scheme,
