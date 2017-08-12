@@ -112,7 +112,7 @@ TRANSFER_FORMS = [
 ]
 TRANSFER_TEMPLATES = {
     "step1":'scheme_form.html',
-    "step2":"help.html",
+    "step2":"upload2.html",
 }
 
 class Wizard(SessionWizardView):
@@ -123,7 +123,11 @@ class Wizard(SessionWizardView):
     def get_template_names(self):
         return [TRANSFER_TEMPLATES[self.steps.current]]
 
-
+    def done(self, form_list, **kwargs):
+        print(form_list[0])
+        print(form_list[1])
+        upload_file=form_list[0].cleaned_data('my_file')
+        self.file_storage.delete(upload_file.name)
 
 form_wizard_view = Wizard.as_view(TRANSFER_FORMS)
 
