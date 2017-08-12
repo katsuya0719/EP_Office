@@ -18,6 +18,7 @@ from io import StringIO
 from django.db import transaction
 from formtools.wizard.views import SessionWizardView
 from django.core.files.storage import FileSystemStorage
+from dal import autocomplete
 
 # Create your views here.
 class ListView(ListView):
@@ -223,6 +224,12 @@ def model_form_upload(request):
     return render(request, 'model_form_upload.html', {'form': form})
     documents = html.objects.all()
 
+class ProjectAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = project.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
 
 def register_loc(r,e,l,strDB,parentDB):
     db=strDB(html=parentDB,cooling=r+l[0]+e,eui=r+l[1]+e,euicon=r+l[2]+e,energy=r+l[3]+e,fan=r+l[4]+e,glass=r+l[5]+e,heatbal=r+l[6]+e,hvac=r+l[7]+e,hw=r+l[8]+e,light=r+l[9]+e,oa=r+l[10]+e,oamin=r+l[11]+e,opaque=r+l[12]+e,pump=r+l[13]+e,unmet=r+l[14]+e,wwr=r+l[15]+e,wwrcon=r+l[16]+e,zone=r+l[17]+e)

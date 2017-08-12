@@ -17,7 +17,7 @@ from django.conf.urls import url,include
 from rest_framework import routers
 from django.contrib import admin
 from heatBalance import views
-from project.views import model_form_upload,basic,helpView,UploadView,form_wizard_view
+from project.views import model_form_upload,basic,helpView,UploadView,form_wizard_view,ProjectAutocomplete
 
 #router=routers.DefaultRouter()
 #router.register(r'heat',views.heatBalViewSet)
@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^project/',include('project.urls')),
     url(r'^help/$',helpView.as_view(),name='help'),
     url(r'^ecm/',include('ecm.urls')),
+    url(r'^project-autocomplete/$',ProjectAutocomplete.as_view(),name='project-autocomplete')
     #url(r'^project/$',ListView.as_view(),name='project'),
     #url(r'^project/(?P<pk>\d+)/$',DetailView.as_view(),name='detail'),
     #url(r'^project/(?P<pk>\d+)/basic$',basic.as_view(),name='basic'),

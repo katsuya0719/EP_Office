@@ -27,6 +27,9 @@ class project(models.Model):
 	location=models.ForeignKey(location,related_name='project')
 	program=models.ForeignKey(program,related_name='project')
 
+	def __str__(self):
+		return self.project
+
 class scheme(models.Model):
 	project=models.ForeignKey(project,related_name='schemes',on_delete=models.CASCADE)
 	SCHEME_CHOICES = (
