@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8d9d9a17-5b13-4465-adc5-71e5306e4188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/forms.py" afterPath="$PROJECT_DIR$/project/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/views.py" afterPath="$PROJECT_DIR$/project/views.py" />
     </list>
     <ignored path="DjangoEP-master.iws" />
@@ -27,13 +26,12 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="161" column="30" lean-forward="true" selection-start-line="161" selection-start-column="30" selection-end-line="161" selection-end-column="30" />
+            <state relative-caret-position="428">
+              <caret line="164" column="12" lean-forward="false" selection-start-line="164" selection-start-column="12" selection-end-line="164" selection-end-column="12" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
-                <element signature="e#2266#3120#0" expanded="false" />
-                <element signature="e#5060#5869#0" expanded="false" />
-                <element signature="e#5908#7175#0" expanded="false" />
+                <element signature="e#2281#3135#0" expanded="false" />
+                <element signature="e#5273#6082#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -979,13 +977,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="161" column="30" lean-forward="true" selection-start-line="161" selection-start-column="30" selection-end-line="161" selection-end-column="30" />
+        <state relative-caret-position="428">
+          <caret line="164" column="12" lean-forward="false" selection-start-line="164" selection-start-column="12" selection-end-line="164" selection-end-column="12" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <element signature="e#2266#3120#0" expanded="false" />
-            <element signature="e#5060#5869#0" expanded="false" />
-            <element signature="e#5908#7175#0" expanded="false" />
+            <element signature="e#2281#3135#0" expanded="false" />
+            <element signature="e#5273#6082#0" expanded="false" />
           </folding>
         </state>
       </provider>

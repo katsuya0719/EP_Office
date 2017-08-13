@@ -19,6 +19,7 @@ from django.db import transaction
 from formtools.wizard.views import SessionWizardView
 from django.core.files.storage import FileSystemStorage
 from dal import autocomplete
+import inspect
 
 # Create your views here.
 class ListView(ListView):
@@ -144,23 +145,28 @@ TRANSFER_TEMPLATES = {
     "step2":"upload2.html",
     "step3":"upload2.html"
 }
+
 class UploadWizard(SessionWizardView):
     location=os.path.join(settings.MEDIA_ROOT,'data','temp')
     print (location)
     file_storage = FileSystemStorage(location)
 
+
     def get_template_names(self):
         return [TRANSFER_TEMPLATES[self.steps.current]]
 
     def get_form_initial(self, step):
-        if step == self.step3:
-            form_class=self.form_list[step]
-            data1=self.get_cleaned_data_for_step(self.step1)
-            data2 = self.get_cleaned_data_for_step(self.step2)
-            print(data1)
-            if data1 is not None:
-                extra = get_ex
-
+        print (step)
+        print(self.initial_dict)
+        initial={}
+        if step == 'step3':
+            temp1=self.storage.get_step_data('step1')
+            print (temp1)
+            
+            #form_class=self.form_list[step]
+            #data1=self.get_cleaned_data_for_step(self.step1)
+            #data2 = self.get_cleaned_data_for_step(self.step2)
+            #print(data1)
 
     def done(self, form_list, **kwargs):
         print(form_list[0])
@@ -169,8 +175,10 @@ class UploadWizard(SessionWizardView):
         upload_file=form_list[0].cleaned_data('my_file')
         self.file_storage.delete(upload_file.name)
 
+        return HttpResponseRedirect(reverse('project:index'))
 
 
+inspect.getmembers(UploadWizard)
 form_wizard_view = UploadWizard.as_view(TRANSFER_FORMS)
 
 class UploadView(CreateView):
