@@ -156,17 +156,25 @@ class UploadWizard(SessionWizardView):
         return [TRANSFER_TEMPLATES[self.steps.current]]
 
     def get_form_initial(self, step):
-        print (step)
-        print(self.initial_dict)
         initial={}
         if step == 'step3':
             temp1=self.storage.get_step_data('step1')
-            print (temp1)
-            
-            #form_class=self.form_list[step]
-            #data1=self.get_cleaned_data_for_step(self.step1)
-            #data2 = self.get_cleaned_data_for_step(self.step2)
-            #print(data1)
+            temp2=self.storage.get_step_data('step2')
+            print(temp1)
+            print (temp2)
+            project_name=temp1.get('step1-project')
+            project_id=temp2.get('step2-project')
+            scheme_name = temp2.get('step2-scheme')
+            print(project,scheme)
+            #s=scheme(project=project_name)
+            #print(s)
+            test = scheme.objects.filter(scheme=scheme_name, project_id=project_id)
+            test2=html.objects.filter(scheme__scheme=scheme_name,scheme_project=project_name)
+            print(test)
+            print(test.values())
+            print (test2)
+            #according to the queryset based on the temp1,2,set initial data
+            #initial['version']=
 
     def done(self, form_list, **kwargs):
         print(form_list[0])

@@ -42,6 +42,9 @@ class scheme(models.Model):
 	configuration=models.TextField()
 	ecms = models.ManyToManyField(ecm, blank=True)
 
+	def __str__(self):
+		return str(self.project)+"_"+self.scheme
+
 class html(models.Model):
 	scheme=models.ForeignKey(scheme,related_name='html',on_delete=models.CASCADE)
 	version = models.IntegerField(default=0)
@@ -49,8 +52,8 @@ class html(models.Model):
 	html = models.FileField(upload_to=dir_path)
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 
-	def __str__(self):
-		return self.scheme+"_v"+str(self.version)
+	#def __str__(self):
+	#	return self.scheme+"_v"+str(self.version)
 
 
 class area(models.Model):
