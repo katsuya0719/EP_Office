@@ -165,14 +165,13 @@ class UploadWizard(SessionWizardView):
             project_name=temp1.get('step1-project')
             project_id=temp2.get('step2-project')
             scheme_name = temp2.get('step2-scheme')
-            print(project,scheme)
+            #print(project,scheme)
             #s=scheme(project=project_name)
             #print(s)
             test = scheme.objects.filter(scheme=scheme_name, project_id=project_id)
-            test2=html.objects.filter(scheme__scheme=scheme_name,scheme_project=project_name)
-            print(test)
-            print(test.values())
-            print (test2)
+            #test2=html.objects.filter(scheme__scheme=scheme_name,scheme_project=project_name)
+            #print(test)
+            #print(test.values())
             #according to the queryset based on the temp1,2,set initial data
             #initial['version']=
 

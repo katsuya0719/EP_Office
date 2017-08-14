@@ -7,7 +7,7 @@ from dal import autocomplete
 class DocumentForm(ModelForm):
     class Meta:
         model = html
-        exclude=['scheme']
+        exclude=()
 
 class SchemeForm(ModelForm):
     class Meta:
